@@ -8,3 +8,7 @@ It guesses the arrival time of your bus, of course... but it also considers some
 Road Glide takes traffic and weather data and tries to guess when your bus is going to come based on these results. So if something happened and a bunch of roads are closed, which leads to traffic everywhere, which delays your bus, Road Glide can see that and gives you a more accurate ETA. It also uses typical traffic data while you're planning your route to ensure you have the most accurate timings ever, so you have more time to squeeze in that morning Timmies coffee.
 
 Currently in development. Road Glide only supports OC Transpo at the time.
+
+##The Team
+**Lester Ho**: Backend and Prediction Logic
+**Maxim Soloho** Frontend and Map Interface
