@@ -4,6 +4,7 @@ const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+
 app.use(express.json());
 app.get('/api/buses', async (req, res) => {
     try {
@@ -12,10 +13,15 @@ app.get('/api/buses', async (req, res) => {
                 'Ocp-Apim-Subscription-Key': process.env.OCTRANSPO_API_KEY
             }
         });
-        res.json(response.data);
+        const allBuses = response.data.entity || [];
+        const route88 = allBuses.filter(bus => {
+            return bus?.vehicle?.trip?.routeId === '088'});
+        res.json(route88);
     } catch (error) {
         console.error("Well well well something happened... ", error.message);
     }
 });
 
-app.listen(3000)
+app.listen(PORT, () => {
+    console.log(`ROAD-GLIDE: LISTENING AT PORT ${PORT}`);
+});
