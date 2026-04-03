@@ -4,23 +4,38 @@ const map = L.map('map').setView([45.4215, -75.6972], 13);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd',//makes everything load faster by loading from multiple servers ❤️‍🩹//
-    maxZoom: 19.67
+    subdomains: 'abcd',
+    maxZoom: 19
 }).addTo(map);
 
-const geocoder = L.Control.geocoder({
-    defaultMarkGeocode: false
-})
-.on('markgeocode', function(e) {
-    var bbox = e.geocode.bbox;
+const routingControl = L.Routing.control({
+    waypoints: [],
+    lineOptions: {
+        styles: [{ colour: 'blue', weight: 6.7 }]
+    },
+    addWaypoints: false,
+    draggableWaypoints: false,
+    show: false
+}).addTo(map);
 
-    L.marker(e.geocode.centre).addTo(map)
-        .bindPopup(e.geocode.name)
-        .openPopup();
-})
-.addTo(map);
+const geocoder = L.Control.geocoder({ defaultMarkGeocode: false })
+    .on('markgeocode', function(e) {
+        const destination = e.geocode.center;
+        const startPoint = L.latLng(45.4215, -75.6972); // backup start
+
+        map.fitBounds(L.latLngBounds([startPoint, destination]));
+        routingControl.setWaypoints([startPoint, destination]);
+        L.marker(destination).addTo(map)
+            .bindPopup(`
+                <b>${e.geocode.name}</b><br>
+                <span style="colour: green">$4.00</span><br>
+                <span style="colour: red">Next Bus: 4m delay</span>
+            `)
+            .openPopup();
+    })
+    .addTo(map);
 
 setTimeout(() => {
-   map.invalidateSize();
-   console.log("Map resize triggered");
+    map.invalidateSize();
+    console.log("Map resize triggered");
 }, 367);
