@@ -19,6 +19,14 @@ const routingControl = L.Routing.control({
 }).addTo(map);
 
 const geocoder = L.Control.geocoder({ defaultMarkGeocode: false })
+    defaultMarkGeocode: false
+    geocoder: L.Control.Geocoder.nominatim({
+        geocodingQueryParams: {
+            viewbox: '-76.35,45.75,-75.05,45.12',
+            bounded: 1
+        }
+    })
+
     .on('markgeocode', function(e) {
         const destination = e.geocode.center;
         const startPoint = L.latLng(45.4215, -75.6972); // backup start
