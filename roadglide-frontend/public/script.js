@@ -22,7 +22,7 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r
 const routingControl = L.Routing.control({
     waypoints: [],
     lineOptions: {
-        styles: [{ colour: 'blue', weight: 6.7 }]
+        styles: [{ color: 'blue', weight: 6.7 }]
     },
     addWaypoints: false,
     draggableWaypoints: false,
@@ -38,22 +38,19 @@ const geocoder = L.Control.geocoder({
         }
     })
 })
+.on('markgeocode', function(e) {
+    const destination = e.geocode.center;
+    const startPoint = L.latLng(45.4215, -75.6972);
 
-    .on('markgeocode', function(e) {
-        const destination = e.geocode.center;
-        const startPoint = L.latLng(45.4215, -75.6972); // backup start
-
-        map.fitBounds(L.latLngBounds([startPoint, destination]));
-        routingControl.setWaypoints([startPoint, destination]);
-        L.marker(destination).addTo(map)
-            .bindPopup(`
-                <b>${e.geocode.name}</b><br>
-                <span style="colour: green">$4.00</span><br>
-                <span style="colour: red">Next Bus: 4m delay</span>
-            `)
-            .openPopup();
-    })
-    .addTo(map);
+    map.fitBounds(L.latLngBounds([startPoint, destination]));
+    routingControl.setWaypoints([startPoint, destination]);
+    
+    L.marker(destination).addTo(map)
+        .bindPopup(`
+            <b>${e.geocode.name}</b><br> <span style="color: green">$4.00</span><br> <span style="color: red">Next Bus: 4m delay</span> `)
+        .openPopup();
+})
+.addTo(map);
 
 setTimeout(() => {
     map.invalidateSize();
