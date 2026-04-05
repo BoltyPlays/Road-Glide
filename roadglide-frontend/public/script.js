@@ -29,14 +29,15 @@ const routingControl = L.Routing.control({
     show: false
 }).addTo(map);
 
-const geocoder = L.Control.geocoder({ defaultMarkGeocode: false })
-    defaultMarkGeocode: false
+const geocoder = L.Control.geocoder({ 
+    defaultMarkGeocode: false,
     geocoder: L.Control.Geocoder.nominatim({
         geocodingQueryParams: {
             viewbox: '-76.35,45.75,-75.05,45.12',
             bounded: 1
         }
     })
+})
 
     .on('markgeocode', function(e) {
         const destination = e.geocode.center;
