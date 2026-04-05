@@ -1,6 +1,17 @@
 console.log("Map script is starting...");
 
-const map = L.map('map').setView([45.4215, -75.6972], 13);
+const bounds = L.latLngBounds(
+    L.latLng(45.12, -76.35),
+    L.latLng(45.75, -75.05)
+);
+
+const map = L.map('map', {
+    center: [45.4215, -75.6972],
+    zoom: 13,
+    minZoom: 10,
+    maxBounds: bounds,
+    maxBoundsViscosity: 1.0
+});
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
