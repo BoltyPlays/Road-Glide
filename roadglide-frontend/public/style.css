@@ -2,7 +2,7 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: comfoftaa, sans-serif;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 #map {
@@ -29,7 +29,7 @@ body, html {
     position: absolute;
     top: 80px; 
     right: 10px; 
-    z-index: index 6767; 
+    z-index: 6767; 
     display: flex; 
     flex-direction: column;
     gap: 5px;
