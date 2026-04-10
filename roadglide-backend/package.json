@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "axios": "^1.14.0",
+    "dotenv": "^17.4.1",
+    "express": "^5.2.1",
+    "gtfs-realtime-bindings": "^1.1.1",
+    "socket.io": "^4.8.3"
+  },
+  "name": "road-glide",
+  "version": "1.0.0",
+  "description": "Road Glide is a tracker designed to keep you one step ahead. Not only does it support live tracking for buses, and inform you of delays, detours, and cancellations, it allows you to plan routes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BoltyPlays/Road-Glide.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/BoltyPlays/Road-Glide/issues"
+  },
+  "homepage": "https://github.com/BoltyPlays/Road-Glide#readme"
+}
