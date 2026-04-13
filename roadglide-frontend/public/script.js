@@ -31,6 +31,8 @@ const routingControl = L.Routing.control({
 
 const geocoder = L.Control.geocoder({ 
     defaultMarkGeocode: false,
+    SuggestMinLength: 3,
+    suggestTimeout: 400,
     geocoder: L.Control.Geocoder.nominatim({
         geocodingQueryParams: {
             viewbox: '-76.35,45.75,-75.05,45.12',
