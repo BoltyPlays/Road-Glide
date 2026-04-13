@@ -1,6 +1,11 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 require('dotenv').config()
 const express = require('express');
 const http = require('http');
+const https = require('https')
+const agent = new https.Agent({
+    rejectUnauthorized: false
+});
 const { Server } = require('socket.io');
 const axios = require('axios');
 const app = express();
@@ -12,12 +17,15 @@ const refreshInterval = 30000;
 async function fetchBusData() {
     try {
         const url = `https://api.octranspo1.com/v2.0/getNextTripsForStopAllRoutes`;
-        const response = await axios.get(url, new URLSearchParams({
-            appID: process.env.OCTRANSPO_APP_ID,
-            apiKey: process.env.OCTRANSPO_API_KEY,
-            stopNo: '3027',
-            format: 'json'
-        }));
+        const response = await axios.get(url, {
+            params: {
+                appID: process.env.OCTRANSPO_APP_ID,
+                apiKey: process.env.OCTRANSPO_API_KEY,
+                stopNo: '3027',
+                format: 'json'
+            },
+            httpsAgent: agent // <--- ADD THIS
+        });
         return response.data;
     } catch (error) {
         console.error("When the API doesn't API... ", error.message);
