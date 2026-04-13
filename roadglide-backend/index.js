@@ -1,4 +1,6 @@
+// Fix this later!!! I hate the warning that pops up inside my bash terminal
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 require('dotenv').config()
 const express = require('express');
 const http = require('http');
@@ -14,6 +16,7 @@ const server = http.createServer(app);
 const io = new Server(server);
 const refreshInterval = 30000;
 
+// Why fetchBusData? Should be obvious, but when called, it fetches info of every single bus currently active
 async function fetchBusData() {
     try {
         const url = `https://api.octranspo1.com/v2.0/getNextTripsForStopAllRoutes`;
@@ -55,6 +58,7 @@ app.get('/api/buses', async (req, res) => {
             return bus?.Vehicle?.Trip?.RouteId === inputRoute});
         res.json(route);
     } catch (error) {
+        // If it's a 401 error, check the .env file and make sure it's in the right place
         console.error("Well well well something happened... ", error.message);
     }
 });
