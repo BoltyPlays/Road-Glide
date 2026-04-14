@@ -1,3 +1,5 @@
+//ERRORS: CANNOT FIND THE GEMINI API KEY, CHECK .ENV
+
 // Fix this later!!! I hate the warning that pops up inside my bash terminal
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -15,6 +17,23 @@ const PORT = process.env.PORT || 3000;
 const server = http.createServer(app);
 const io = new Server(server);
 const refreshInterval = 30000;
+const { getWeather } = require ('./weather.js');
+const { getAreaMultipliers } = require('./geminiBackend.js');
+
+let multipliers = {};
+
+async function reloadWeather() {
+    console.log("Getting the weather...");
+    const regionalWeather = await getWeather();
+
+    if (regionalWeather) {
+        multipliers = await getAreaMultipliers(regionalWeather);
+        console.log("New delay multipliers loaded: ", multipliers);
+    }
+}
+
+reloadWeather();
+setInterval(reloadWeather, 10 * 60 * 1000);
 
 // Why fetchBusData? Should be obvious, but when called, it fetches info of every single bus currently active
 async function fetchBusData() {
@@ -39,7 +58,10 @@ async function fetchBusData() {
 setInterval(async () => {
     const data = await fetchBusData();
     if (data) {
-        io.emit('busUpdate', data);
+        io.emit('busUpdate', {
+            busData: data,
+            multipliers: multipliers
+        });
         console.log(`Pushed at ${new Date().toLocaleTimeString()}`);
     }
 }, refreshInterval);
