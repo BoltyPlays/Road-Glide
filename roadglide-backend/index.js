@@ -8,7 +8,9 @@ const express = require('express');
 const http = require('http');
 const https = require('https')
 const agent = new https.Agent({
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
+    family: 4, // Does not seem to like IPV6 connections
+    keepAlive: false
 });
 const { Server } = require('socket.io');
 const axios = require('axios');
